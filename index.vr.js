@@ -61,8 +61,8 @@ class ModelSample extends React.Component {
         <AmbientLight intensity={0.6} />
         <Model style={{ transform: [ {translate: [ 10, -10, -100]}, {scale: this.state.scale}, {rotateY: this.state.rotation / 5} ] }} source={{ obj: asset('IronMan/IronMan.obj'), mtl: asset('IronMan/IronMan.mtl') }} lit={true} />
         <View style={this.styles.menu}>
-          <Button text='+' callback={() => this.setState((prevState) => ({ scale: prevState.scale * 2 }) ) } />
-          <Button text='-' callback={() => this.setState((prevState) => ({ scale: prevState.scale/2 }) ) } />
+          <Button text='Zoom In' callback={() => this.setState((prevState) => ({ scale: prevState.scale * 2 }) ) } />
+          <Button text='Zoom Out' callback={() => this.setState((prevState) => ({ scale: prevState.scale/2 }) ) } />
         </View>
       </View> 
     )

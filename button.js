@@ -7,11 +7,11 @@ export default class Button extends React.Component {
     this.styles = StyleSheet.create({
         button:{
             margin:0.05,
-            height:0.4,
+            height:0.25,
             backgroundColor: 'red',
         },
         text:{
-            fontSize:0.4,
+            fontSize:0.2,
             textAlign: 'center'
         }
 
