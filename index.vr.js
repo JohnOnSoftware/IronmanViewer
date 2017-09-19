@@ -1,13 +1,13 @@
 import React from 'react'
 import { Animated, AppRegistry, asset, Model, Pano, AmbientLight, PointLight, VrButton, Text, View, StyleSheet } from 'react-vr'
-import Button from './button.js'
-import animateStore from './createStore.js'
+import Button from './src/component/button.js'
+import animateStore from './src/store/createStore.js'
 
 class ModelSample extends React.Component {
   constructor () {
     super()
     this.state = animateStore.getState();
-    
+
     animateStore.subscribe( ()=>{
         this.setState( animateStore.getState());
     } )
