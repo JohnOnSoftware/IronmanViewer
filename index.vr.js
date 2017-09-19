@@ -1,15 +1,16 @@
 import React from 'react'
 import { Animated, AppRegistry, asset, Model, Pano, AmbientLight, PointLight, VrButton, Text, View, StyleSheet } from 'react-vr'
 import Button from './button.js'
-
+import animateStore from './createStore.js'
 
 class ModelSample extends React.Component {
   constructor () {
     super()
-    this.state = {
-      rotation: 0,
-      scale: 0.1
-    }
+    this.state = animateStore.getState();
+    
+    animateStore.subscribe( ()=>{
+        this.setState( animateStore.getState());
+    } )
 
     this.styles = StyleSheet.create({
       menu:{
@@ -24,17 +25,12 @@ class ModelSample extends React.Component {
         ]
       }
     })
-    this.lastUpdate = Date.now()
     this.rotate = this.rotate.bind(this)
   }
 
   rotate () {
-    const now = Date.now()
-    const delta = now - this.lastUpdate
-    this.lastUpdate = now
-
-    this.setState({
-      rotation: this.state.rotation + delta / 20
+    animateStore.dispatch({
+      type : 'ROTATE'
     })
 
     this.frameHandle = requestAnimationFrame(this.rotate)
@@ -53,16 +49,31 @@ class ModelSample extends React.Component {
     }
   }
 
+  zoomIn(){
+    animateStore.dispatch({
+      type : 'ZOOMIN'
+    })
+
+  }
+
+  zoomOut(){
+    animateStore.dispatch({
+      type : 'ZOOMOUT'
+    })
+
+  }
+  
+
   render () {
     return (
       <View>
         <Pano source={asset('sky.jpg')}/>
         <PointLight style={{color: 'white', transform: [{translate: [0, 400, 700]}]}} />
         <AmbientLight intensity={0.6} />
-        <Model style={{ transform: [ {translate: [ 10, -10, -100]}, {scale: this.state.scale}, {rotateY: this.state.rotation / 5} ] }} source={{ obj: asset('IronMan/IronMan.obj'), mtl: asset('IronMan/IronMan.mtl') }} lit={true} />
+        <Model style={{ transform: [ {translate: [ 10, -10, -100]}, {scale: this.state.scale}, {rotateY: this.state.rotation} ] }} source={{ obj: asset('IronMan/IronMan.obj'), mtl: asset('IronMan/IronMan.mtl') }} lit={true} />
         <View style={this.styles.menu}>
-          <Button text='Zoom In' callback={() => this.setState((prevState) => ({ scale: prevState.scale * 2 }) ) } />
-          <Button text='Zoom Out' callback={() => this.setState((prevState) => ({ scale: prevState.scale/2 }) ) } />
+          <Button text='Zoom In' callback= {this.zoomIn.bind(this)} />
+          <Button text='Zoom Out' callback={this.zoomOut.bind(this) } />
         </View>
       </View> 
     )

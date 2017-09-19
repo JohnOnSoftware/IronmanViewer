@@ -20,6 +20,7 @@
     "react-native": "~0.42.0",
     "react-vr": "^1.1.0",
     "react-vr-web": "^1.1.0",
+    "redux": "^3.7.2",
     "three": "^0.80.1"
   },
   "devDependencies": {
